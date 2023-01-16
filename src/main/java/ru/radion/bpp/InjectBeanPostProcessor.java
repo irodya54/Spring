@@ -4,14 +4,16 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.PriorityOrdered;
+import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
 import ru.radion.annotacions.InjectBeant;
 import ru.radion.database.connectionPool.ConnectionPool;
 
 import java.util.Arrays;
-
-public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationContextAware {
+@Component
+public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationContextAware, PriorityOrdered {
 
     private ApplicationContext context;
 
@@ -22,7 +24,6 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        System.out.println();
         Arrays.stream(bean.getClass().getDeclaredFields())
                 .filter(field -> field.isAnnotationPresent(InjectBeant.class))
                 .forEach(field -> {
@@ -37,5 +38,10 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         return BeanPostProcessor.super.postProcessAfterInitialization(bean, beanName);
+    }
+
+    @Override
+    public int getOrder() {
+        return PriorityOrdered.HIGHEST_PRECEDENCE;
     }
 }
