@@ -6,6 +6,7 @@ import ru.radion.config.ApplicationConfiguration;
 import ru.radion.database.connectionPool.ConnectionPool;
 import ru.radion.database.entity.Company;
 import ru.radion.database.repository.CrudRepository;
+import ru.radion.service.CompanyService;
 
 import java.util.Optional;
 
@@ -16,9 +17,9 @@ public class Main {
             context.register(ApplicationConfiguration.class);
             context.getEnvironment().setActiveProfiles("web", "prod");
             context.refresh();
-            ConnectionPool pool1 = context.getBean("pool1", ConnectionPool.class);
-            CrudRepository<Integer, Company> repository = context.getBean("companyRepository", CrudRepository.class);
-            repository.findById(1);
+
+            CompanyService service = context.getBean("companyService", CompanyService.class);
+            System.out.println(service.findById(1));
         }
 
 

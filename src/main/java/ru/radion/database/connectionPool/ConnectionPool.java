@@ -16,13 +16,13 @@ public class ConnectionPool {
         this.poolsize = poolsize;
     }
 
-    @PostConstruct
-    public void init() {
-        System.out.println("Initial pool size");
-    }
+//    @PostConstruct
+//    public void init() {
+//        System.out.println("Initial pool size");
+//    }
 
-    @PreDestroy
-    public void destroy() {
-        System.out.println("Close pool size");
-    }
+//    @PreDestroy
+//    public void destroy() {
+//        System.out.println("Close pool size");
+//    }
 }
