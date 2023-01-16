@@ -1,5 +1,7 @@
 package ru.radion.database.connectionPool;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.List;
 import java.util.Map;
 
@@ -20,11 +22,12 @@ public class ConnectionPool {
         this.properties = properties;
     }
 
+    @PostConstruct
     public void init() {
         System.out.println("Initial pool size");
     }
 
-
+    @PreDestroy
     public void destroy() {
         System.out.println("Close pool size");
     }

@@ -11,9 +11,9 @@ public class Main {
         try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application.xml")) {
             ConnectionPool pool1 = context.getBean("pool1", ConnectionPool.class);
             CompanyRepository repository = context.getBean("companyRepository", CompanyRepository.class);
+            System.out.println();
         }
 
-        System.out.println();
 
     }
 }
