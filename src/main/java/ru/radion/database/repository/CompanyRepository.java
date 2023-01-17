@@ -1,5 +1,7 @@
 package ru.radion.database.repository;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -15,32 +17,28 @@ import java.util.Optional;
 @Transaction
 @Auditing
 @Repository
+@RequiredArgsConstructor
+@Slf4j
 public class CompanyRepository implements CrudRepository<Integer, Company>{
     private final ConnectionPool pool1;
-     private final Integer poolSize;
+    @Value("${db.pool.size}")
+    private final Integer poolSize;
     private final List<ConnectionPool> pools;
 
-    public CompanyRepository(ConnectionPool pool1,
-                             @Value("${db.pool.size}") Integer poolSize,
-                             List<ConnectionPool> pools) {
-        this.pool1 = pool1;
-        this.poolSize = poolSize;
-        this.pools = pools;
-    }
 
     @Override
     public Optional<Company> findById(Integer id) {
-        System.out.println("delete by id method");
+        log.info("find by id method");
         return Optional.of(new Company(id));
     }
 
     @Override
     public void delete(Company entity) {
-        System.out.println("find by id method");
+        log.info("delete method");
     }
 
     @PostConstruct
     private void init() {
-        System.out.println("Init Company Repository");
+       log.warn("Init Company Repository");
     }
 }

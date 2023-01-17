@@ -1,5 +1,6 @@
 package ru.radion.bpp;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 import static java.lang.System.nanoTime;
 @Component
+@Slf4j
 public class AuditingBeanPostProcessor implements BeanPostProcessor {
 
     Map<String, Class<?>> auditingBean = new HashMap<>();
@@ -30,12 +32,12 @@ public class AuditingBeanPostProcessor implements BeanPostProcessor {
         if (beanClass != null) {
             return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(),
                     (proxy, method, args) -> {
-                        System.out.println("Auditing method: " + method.getName());
+                        log.warn("Auditing method: " + method.getName());
                         long start = nanoTime();
                         try {
                             return method.invoke(bean, args);
                         } finally {
-                            System.out.println("Time: " + (nanoTime() - start)/1000);
+                            log.warn("Time: " + (nanoTime() - start)/1000);
                         }
                     });
         }

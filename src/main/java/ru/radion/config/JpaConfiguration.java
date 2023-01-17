@@ -1,5 +1,6 @@
 package ru.radion.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import ru.radion.config.condition.JpaConditional;
@@ -8,10 +9,12 @@ import javax.annotation.PostConstruct;
 
 @Conditional(JpaConditional.class)
 @Configuration
+@Slf4j
 public class JpaConfiguration {
-@PostConstruct
+
+    @PostConstruct
     public void init() {
-    System.out.println("Init JPA configuration");
-}
+        log.info("Init JPA configuration");
+    }
 
 }

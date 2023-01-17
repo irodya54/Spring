@@ -1,5 +1,6 @@
 package ru.radion.bpp;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.core.Ordered;
@@ -11,6 +12,7 @@ import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 @Component
+@Slf4j
 public class TransacionBeanPostProcessor implements BeanPostProcessor, Ordered {
 
     Map<String, Class<?>> beanClasses = new HashMap<>();
@@ -28,11 +30,11 @@ public class TransacionBeanPostProcessor implements BeanPostProcessor, Ordered {
         if (bean.getClass().isAnnotationPresent(Transaction.class)) {
             return Proxy.newProxyInstance(bean.getClass().getClassLoader(), bean.getClass().getInterfaces(),
                     (proxy, method, args) -> {
-                        System.out.println("Open transaction");
+                        log.warn("Open transaction");
                         try {
                             return method.invoke(bean, args);
                         } finally {
-                            System.out.println("Close transaction");
+                            log.warn("Close transaction");
                         }
                     });
         }

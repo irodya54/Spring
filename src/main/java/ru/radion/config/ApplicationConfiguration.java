@@ -3,25 +3,13 @@ package ru.radion.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.*;
-import org.springframework.stereotype.Component;
 import ru.radion.database.connectionPool.ConnectionPool;
-import ru.radion.database.repository.CrudRepository;
 import ru.radion.database.repository.UserRepository;
 import ru.web.ConfigurationWeb;
 
 //@ImportResource("classpath:application.xml")
 @Import(ConfigurationWeb.class)
 @Configuration(proxyBeanMethods = true)
-@PropertySource("classpath:application.properties")
-@ComponentScan(basePackages = "ru.radion",
-        useDefaultFilters = false,
-        includeFilters = {
-                @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Component.class),
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = CrudRepository.class),
-                @ComponentScan.Filter(type = FilterType.REGEX, pattern = "ru\\..+Repository")
-
-        }
-)
 public class ApplicationConfiguration {
     @Bean
     public String getDriver() {
@@ -39,7 +27,7 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    @Profile("prod||web")
+    @Profile("prod||dev")
     public UserRepository userRepository2 (ConnectionPool pool2) {
         return new UserRepository(pool2);
     }

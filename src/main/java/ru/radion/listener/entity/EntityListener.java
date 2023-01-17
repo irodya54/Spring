@@ -1,10 +1,12 @@
 package ru.radion.listener.entity;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class EntityListener {
 
     @EventListener
@@ -12,7 +14,7 @@ public class EntityListener {
     public void acceptEntity(EntityEvent entityEvent) {
         if (entityEvent.getType().equals(AccessType.READ)) {
 
-            System.out.println("Entity: " + entityEvent);
+            log.warn("Entity: " + entityEvent.getSource().toString());
         }
     }
 }
