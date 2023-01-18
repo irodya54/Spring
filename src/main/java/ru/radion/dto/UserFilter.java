@@ -5,7 +5,7 @@ import lombok.Value;
 import java.time.LocalDate;
 
 @Value
-public class PersonalInfo {
+public class UserFilter {
 
     String firstname;
     String lastname;

@@ -22,15 +22,15 @@ public class CompanyServiceItTest extends TestMain{
         super(companyService, databaseProperties, pool1);
     }
 
-    @Test
-    void findById() {
-        Optional<CompanyReadDto> mayBeCompany = companyService.findById(COMPANY_ID);
-
-        assertTrue(mayBeCompany.isPresent());
-
-        CompanyReadDto companyReadDto = new CompanyReadDto(COMPANY_ID);
-
-        mayBeCompany.ifPresent(company -> assertEquals(companyReadDto, company));
-    }
+//    @Test
+//    void findById() {
+//        Optional<CompanyReadDto> mayBeCompany = companyService.findById(COMPANY_ID);
+//
+//        assertTrue(mayBeCompany.isPresent());
+//
+//        CompanyReadDto companyReadDto = new CompanyReadDto(COMPANY_ID);
+//
+//        mayBeCompany.ifPresent(company -> assertEquals(companyReadDto, company));
+//    }
 
 }

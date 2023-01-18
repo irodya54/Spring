@@ -5,8 +5,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.*;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.history.RevisionRepository;
+import ru.radion.database.entity.Company;
 import ru.radion.database.entity.Role;
 import ru.radion.database.entity.User;
+import ru.radion.dto.PersonalInfo;
+import ru.radion.dto.PersonalInfo2;
 
 import javax.persistence.LockModeType;
 import javax.persistence.QueryHint;
@@ -15,7 +20,11 @@ import java.time.Year;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends
+        JpaRepository<User, Long>,
+        FilterUserRepository,
+        RevisionRepository<User, Long, Integer>,
+        QuerydslPredicateExecutor<User> {
 
     @Query("select u from User u where u.firstname like %:firstname% and u.lastname like %:lastname%")
     List<User> findBy(String firstname, String lastname);
@@ -39,4 +48,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @EntityGraph(value = "User.company.locales")
     Page<User> findAllBy(Pageable pageable);
+
+//    List<PersonalInfo> findAllByCompanyId(Integer companyId);
+
+    <T> Optional<T> findTopByFirstname (String firstname, Class<T> clazz);
+
+    @Query(nativeQuery = true,
+            value = "SELECT u.firstname, u.lastname, u.birth_date BirthDate FROM users AS u WHERE company_id = :companyId")
+    List<PersonalInfo2> findAllByCompanyId (Integer companyId);
 }

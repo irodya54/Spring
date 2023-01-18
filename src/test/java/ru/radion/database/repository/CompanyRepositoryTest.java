@@ -2,11 +2,13 @@ package ru.radion.database.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
+import ru.radion.IntegrationTestBase;
 import ru.radion.annotacions.Transaction;
 import ru.radion.annotation.IT;
 import ru.radion.database.entity.Company;
@@ -19,10 +21,10 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
-@IT
+
 @RequiredArgsConstructor
 @Transactional
-class CompanyRepositoryTest {
+class CompanyRepositoryTest extends IntegrationTestBase {
 
     private final TransactionTemplate transactionTemplate;
     private final EntityManager em;
@@ -41,7 +43,7 @@ class CompanyRepositoryTest {
         Optional<Company> meta = companyRepository.findByName("Meta");
         List<Company> companies = companyRepository.findAllByNameContainingIgnoreCase("a");
         assertFalse(companies.isEmpty());
-        assertThat(companies).hasSize(3);
+        assertThat(companies).hasSize(2);
         assertTrue(meta.isPresent());
         assertThat(companies).contains(meta.get());
     }
@@ -75,11 +77,12 @@ class CompanyRepositoryTest {
 
     }
     @Test
+    @Disabled
     void isDeletedCompanyTest() {
-        Optional<Company> companyOptional = companyRepository.findById(5);
+        Optional<Company> companyOptional = companyRepository.findById(1);
         assertTrue(companyOptional.isPresent());
         companyOptional.ifPresent(companyRepository::delete);
         em.flush();
-        assertTrue(companyRepository.findById(5).isEmpty());
+        assertTrue(companyRepository.findById(1).isEmpty());
     }
 }

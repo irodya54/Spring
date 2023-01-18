@@ -3,13 +3,20 @@ package ru.radion.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.*;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.envers.repository.config.EnableEnversRepositories;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import ru.radion.database.connectionPool.ConnectionPool;
 import ru.radion.database.repository.UserRepository;
 import ru.web.ConfigurationWeb;
 
+import java.util.Optional;
+
 //@ImportResource("classpath:application.xml")
 @Import(ConfigurationWeb.class)
 @Configuration(proxyBeanMethods = true)
+@EnableJpaAuditing
+@EnableEnversRepositories(basePackages = "ru.radion")
 public class ApplicationConfiguration {
     @Bean
     public String getDriver() {
@@ -25,7 +32,12 @@ public class ApplicationConfiguration {
     public ConnectionPool pool3 () {
         return new ConnectionPool("test-username", 25);
     }
-//
+
+    @Bean
+    public AuditorAware<String> auditorAware() {
+        return () -> Optional.of("radion");
+    }
+
 //    @Bean
 //    @Profile("prod||dev")
 //    public UserRepository userRepository2 () {

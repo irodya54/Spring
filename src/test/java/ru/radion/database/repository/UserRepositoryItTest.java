@@ -5,9 +5,15 @@ import net.bytebuddy.TypeCache;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.*;
+import org.springframework.test.annotation.Commit;
+import org.springframework.test.context.jdbc.Sql;
+import ru.radion.IntegrationTestBase;
 import ru.radion.annotation.IT;
 import ru.radion.database.entity.Role;
 import ru.radion.database.entity.User;
+import ru.radion.dto.PersonalInfo;
+import ru.radion.dto.PersonalInfo2;
+import ru.radion.dto.UserFilter;
 
 import java.time.LocalDate;
 import java.time.Year;
@@ -17,11 +23,45 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@IT
+
 @RequiredArgsConstructor
-public class UserRepositoryItTest {
+public class UserRepositoryItTest extends IntegrationTestBase {
 
     private final UserRepository userRepository;
+
+    @Test
+    void testJdbcTemplate() {
+        List<PersonalInfo> users = userRepository.findAllByCompanyIdAndRole(1, Role.USER);
+        assertThat(users).hasSize(1);
+        System.out.println();
+    }
+
+    @Test
+    void checkAuditing() {
+        User user = userRepository.findById(1L).get();
+        user.setBirthDate(user.getBirthDate().plusYears(1L));
+        userRepository.flush();
+        System.out.println();
+    }
+
+    @Test
+    void checkUserRepositoryImplementation() {
+        UserFilter filter = new UserFilter("Ivan", "Ivanov", LocalDate.of(2000, 1, 10));
+        List<User> userByFilter = userRepository.findAllByFilter(filter);
+        assertThat(userByFilter).hasSize(1);
+    }
+
+
+    @Test
+    void checkProjections2() {
+        Optional<PersonalInfo> all = userRepository.findTopByFirstname("Ivan", PersonalInfo.class);
+        System.out.println();
+    }
+    @Test
+    void checkProjections() {
+        List<PersonalInfo2> allByCompanyId = userRepository.findAllByCompanyId(1);
+        System.out.println(allByCompanyId);
+    }
 
     @Test
     void checkPageable() {

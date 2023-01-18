@@ -31,18 +31,18 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     properties:
       hibernate:
         show_sql: true
         format_sql: true
-        hbm2ddl:
-          auto: validate
+
 
 logging:
   level:
     root: info
-    ru.radion.database.connectionPool.ConnectionPool: info
+    ru.radion.database.connectionPool.ConnectionPool: INFO
+    org.springframework.jdbc.core: TRACE
   file:
     name: ${logging.file.path}/my-app.log
     path: './logs/${spring.application.name}'
