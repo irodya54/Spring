@@ -14,10 +14,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 @IT
-//@ActiveProfiles("test")
-//@SpringBootTest
-//@ExtendWith(SpringExtension.class)
-//@ContextConfiguration(classes = Math.class)
 public class CompanyServiceItTest extends TestMain{
 
     private static final Integer COMPANY_ID = 1;
