@@ -20,6 +20,10 @@ db:
       timeout: 3
 
 spring:
+  mvc:
+    view:
+      suffix: .jsp
+      prefix: /WEB-INF/jsp/
   profiles:
     active: qa
   application:
