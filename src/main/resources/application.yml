@@ -24,6 +24,8 @@ spring:
     view:
       suffix: .jsp
       prefix: /WEB-INF/jsp/
+    format:
+      date: iso
   profiles:
     active: qa
   application:
@@ -40,6 +42,7 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+    open-in-view: false
 
 
 logging:

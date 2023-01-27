@@ -1,12 +1,9 @@
 package ru.radion.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Value
 public class CompanyReadDto {
     Integer id;
+    String name;
 }

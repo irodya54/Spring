@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Users</title>
+</head>
+<body>
+<div th:each="user : ${users}">
+  <a th:href="@{'/api/v1/users/' + ${user.id}}" th:text="|${user.id}. ${user.username}|">User</a>
+</div>
+<br>
+<br>
+<div>
+  <button type="submit" name="register" th:action="@{'/api/v1/users/create'}" th:method="get">register</button>
+</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package ru.radion.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.*;
@@ -22,7 +23,7 @@ public class ApplicationConfiguration {
     public String getDriver() {
         return "PostgresDriver";
     }
-    @Bean(value = "pool2")
+    @Bean
     @Scope(value = BeanDefinition.SCOPE_SINGLETON)
     public ConnectionPool pool2 (@Value("${db.username}") String username,
                                  @Value("${db.pool.size}") Integer poolSize) {

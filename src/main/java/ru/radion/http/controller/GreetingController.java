@@ -9,6 +9,8 @@ import ru.radion.dto.LoginDto;
 import ru.radion.dto.UserReadDto;
 import ru.radion.service.UserService;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/api/v1/")
 @RequiredArgsConstructor
@@ -19,7 +21,8 @@ public class GreetingController {
     @GetMapping("hello/{id}")
     public String hello2(Model model,
                          @PathVariable Long id) {
-        model.addAttribute("user", userService.findById(id));
+        Optional<UserReadDto> user = userService.findById(id);
+        model.addAttribute("user", user.get());
         return "hello";
     }
 

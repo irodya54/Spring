@@ -47,6 +47,12 @@ public class User extends AuditingEntity<Long>{
     @ToString.Exclude
     private List<UserChat> userChats = new ArrayList<>();
 
+    @NotAudited
+    @Builder.Default
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<Car> cars = new ArrayList<>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

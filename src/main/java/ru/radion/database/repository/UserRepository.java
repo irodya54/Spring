@@ -21,12 +21,21 @@ public interface UserRepository extends
         FilterUserRepository,
         RevisionRepository<User, Long, Integer>,
         QuerydslPredicateExecutor<User> {
+    Optional<User> findByUsernameIgnoreCase(String username);
 
     @Query("select u from User u where u.firstname like %:firstname% and u.lastname like %:lastname%")
     List<User> findBy(String firstname, String lastname);
 
+
+    @Query(value = "select u.* from users u where u.firstname like :firstname limit 1", nativeQuery = true)
+    User findByFirstname(String firstname);
+
     @Query(nativeQuery = true,
-        value = "SELECT u.* FROM users u WHERE u.birth_date BETWEEN :to AND :from")
+        value = "SELECT u.*, c.*, cl.* " +
+                "FROM users u " +
+                "join company c on c.id = u.company_id " +
+                "join company_locales cl on c.id = cl.company_id " +
+                "WHERE u.birth_date BETWEEN :to AND :from")
     List<User> findByBirthDate(LocalDate to, LocalDate from);
 
     @Modifying(clearAutomatically = true)
@@ -50,7 +59,7 @@ public interface UserRepository extends
     <T> Optional<T> findTopByFirstname (String firstname, Class<T> clazz);
 
     @Query(nativeQuery = true,
-            value = "SELECT u.firstname, u.lastname, u.birth_date BirthDate FROM users AS u WHERE company_id = :companyId")
+            value = "SELECT u.firstname, u.lastname, u.birth_date BirthDate FROM users AS u WHERE u.company_id = :companyId")
     List<PersonalInfo2> findAllByCompanyId (Integer companyId);
 
 }

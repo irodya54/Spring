@@ -51,3 +51,24 @@ VALUES ((SELECT id FROM users WHERE username = 'ivan@gmail.com'), (SELECT id FRO
        ((SELECT id FROM users WHERE username = 'kate@gmail.com'), (SELECT id FROM chat WHERE name = 'java')),
        ((SELECT id FROM users WHERE username = 'petr@gmail.com'), (SELECT id FROM chat WHERE name = 'database')),
        ((SELECT id FROM users WHERE username = 'kate@gmail.com'), (SELECT id FROM chat WHERE name = 'database'));
+
+insert into car (id, brand, model, user_id)
+VALUES (gen_random_uuid(), 'Skoda', 'Rapid', 1),
+       (gen_random_uuid(), 'Skoda', 'Caroq', 2),
+       (gen_random_uuid(), 'Skoda', 'Codiaq', 3),
+       (gen_random_uuid(), 'Lada', 'Vesta', 5),
+       (gen_random_uuid(), 'Lada', 'Priora', 2),
+       (gen_random_uuid(), 'Lada', 'Grantaa', 1),
+       (gen_random_uuid(), 'Kia', 'Ceed', 3),
+       (gen_random_uuid(), 'Kia', 'Rio', 1),
+       (gen_random_uuid(), 'Hyundai', 'Solaris', 4),
+       (gen_random_uuid(), 'Hyundai', 'Tuscon', 5),
+       (gen_random_uuid(), 'Hyundai', 'SantaFe', 1),
+       (gen_random_uuid(), 'VW', 'Tuareg', 3),
+       (gen_random_uuid(), 'VW', 'Tiguan', 2),
+       (gen_random_uuid(), 'VW', 'Polo', 4),
+       (gen_random_uuid(), 'Mercedes', 'Galentwagen', 3),
+       (gen_random_uuid(), 'Mercedes', 'E200', 1),
+       (gen_random_uuid(), 'VW', 'Passat', 2),
+       (gen_random_uuid(), 'VW', 'newmodel', 1),
+       (gen_random_uuid(), 'Kia', 'Sportage', 3);

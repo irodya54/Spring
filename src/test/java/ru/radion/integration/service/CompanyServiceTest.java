@@ -39,7 +39,7 @@ class CompanyServiceTest {
 
         assertTrue(mayBeCompany.isPresent());
 
-        CompanyReadDto companyReadDto = new CompanyReadDto(COMPANY_ID);
+        CompanyReadDto companyReadDto = new CompanyReadDto(COMPANY_ID, null);
 
         mayBeCompany.ifPresent(company -> assertEquals(companyReadDto, company));
 
