@@ -33,6 +33,11 @@ public class CarServiceTest extends IntegrationTestBase {
     private UserMapper userMapper;
 
     @Test
+    void getByUsername() {
+        List<Car> ivan = carService.getCarsByUsername("Ivan");
+        System.out.println();
+    }
+    @Test
     void saveCar() {
         String brand = "Skoda";
         String model = "Octavia";

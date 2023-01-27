@@ -27,6 +27,7 @@ public class UserService {
     private final CompanyRepository companyRepository;
     private final UserMapper userMapper;
 
+
     public UserReadDto findAllFirstName(String firstname) {
         return userMapper.userToUserReadeDto(userRepository.findByFirstname(firstname));
     }
